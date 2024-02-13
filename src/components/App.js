@@ -1,53 +1,37 @@
-//create shapes import React, { useState } from 'react';
-import '../styles/App.css';
-
+export default App;
+import React, { useState } from "react";
+import "../styles/App.css";
 const App = () => {
-  // State to manage the selected shape
-  const [selectedShape, setSelectedShape] = useState('Square');
-
-  // State to manage the shapes added
   const [shapes, setShapes] = useState([]);
+  const [selectedShape, setSelectedShape] = useState("Square");
 
-  // Function to handle adding shapes
-  const addShape = () => {
-    // Generate a unique identifier for the shape
-    const id = Date.now();
-
-    // Add the selected shape to the shapes array
-    setShapes(prevShapes => [
-      ...prevShapes,
-      { id, shape: selectedShape }
-    ]);
-  };
-
-  // Function to handle changing the selected shape
-  const handleShapeChange = (event) => {
-    setSelectedShape(event.target.value);
-  };
+  function handleClick() {
+    setShapes([...shapes, selectedShape.toLowerCase()]);
+  }
 
   return (
     <div id="main">
       <div id="shape-creator">
-        {/* Select element for choosing shape */}
-        <select value={selectedShape} onChange={handleShapeChange}>
-          <option value="Square">Square</option>
-          <option value="Circle">Circle</option>
+        <select
+          onChange={(e) => setSelectedShape(e.target.value)}
+          value={selectedShape}
+        >
+          <option>Square</option>
+          <option>Circle</option>
         </select>
 
-        {/* Button to add shape */}
-        <button onClick={addShape}>Add Shape</button>
+        <button onClick={handleClick}>Add Shape</button>
       </div>
-      
+
       <div id="shapes-holder">
-        {/* Display added shapes */}
-        {shapes.map(shape => (
-          <div key={shape.id} className={shape.shape.toLowerCase()}>
-            {shape.shape} {shape.id}
+        {shapes.map((shape, id) => (
+          <div className={shape} key={id}>
+            {id}
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default App;
